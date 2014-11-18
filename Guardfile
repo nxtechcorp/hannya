@@ -13,7 +13,7 @@ guard :rspec do
   watch('spec/spec_helper.rb')  { "spec" }
 end
 
-guard 'yard' do
+guard 'yard', port: '8888' do
   watch(%r{app/.+\.rb})
   watch(%r{lib/.+\.rb})
   watch(%r{ext/.+\.c})

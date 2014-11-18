@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
 
 group :development do
-  gem 'guard', '~>1.8.3'
-  gem 'guard-rspec', '~> 3.0.3'
+  gem 'guard'
+  gem 'guard-rspec'
   gem 'ruby_gntp'
-  gem 'guard-yard', path: 'gems'
+  gem 'guard-yard'
   gem 'guard-bundler'
   gem 'yard'
+  gem 'kramdown'
 end
 
 group :test do

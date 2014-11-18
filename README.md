@@ -1,6 +1,6 @@
 # Hannya
 
-TODO: Write a gem description
+Hannya is a simple data access layer that can take in either a hash (from a YAML or JSON file) or an XML object (from Nokogiri) and make them both look the same.
 
 ## Installation
 
@@ -20,7 +20,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'hannya'
+
+xml = Nokogiri::XML(File.open 'myfile.xml')
+
+accessor = Hannya::Mask(xml)
+
+accessor.root.orders[1].amount # => '12.95'
+accessor['Root/Orders[1]/Amount'] # => '12.95'
+```
 
 ## Contributing
 
