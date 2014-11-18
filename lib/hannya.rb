@@ -22,8 +22,8 @@ module Hannya
   end
 
   class Mask
-    # @!attribute [r] source [Nokogiri::XML::Node, Hash, Array] the data source
     attr_reader :source
+    # @!attribute source [Nokogiri::XML::Node, Hash, Array] the data source
 
     def initialize(source, opts={})
       @opts_hash = opts
@@ -32,16 +32,18 @@ module Hannya
       @force_array = opts[:force_array]
     end
 
-    def create_method(method_name, query_result)
-      define_singleton_method(method_name) do
-        create_result_list(query_result)
-      end
-    end
-
     def [](key)
       query_result = execute_query(key)
       create_result_list(query_result)
     end
+
+    def list(*keys)
+      keys.map do |key|
+        send key
+      end
+    end
+
+    protected
 
     # TODO: This is ugly
     def create_result_list(query_result)
@@ -59,12 +61,6 @@ module Hannya
     def create_result_list_from_hash(query_result)
       query_result.each_with_object({}) do |(key, value), result_list|
         result_list[key] = get_text_or_node(value)
-      end
-    end
-
-    def list(*keys)
-      keys.map do |key|
-        send key
       end
     end
 
@@ -87,6 +83,13 @@ module Hannya
     def wrap_data(node)
       self.class.new(node, @opts_hash)
     end
+
+    def create_method(method_name, query_result)
+      define_singleton_method(method_name) do
+        create_result_list(query_result)
+      end
+    end
+
   end
 
   class XMLAccessor < Mask
