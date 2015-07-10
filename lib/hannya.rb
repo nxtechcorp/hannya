@@ -28,7 +28,7 @@ module Hannya
     def initialize(source, opts={})
       @opts_hash = opts
       @source = source
-      @converter = opts.fetch(:converter) { default_converter }
+      @converter = DataAddressConverter.create(opts.fetch(:converter) { default_converter })
       @force_array = opts[:force_array]
     end
 
@@ -105,8 +105,12 @@ module Hannya
       end
     end
 
+    def to_s
+      @source.to_s
+    end
+
     def default_converter
-      DataAddressConverter.create(:camel)
+      :full_camel
     end
   end
 
@@ -124,7 +128,11 @@ module Hannya
     end
 
     def default_converter
-      DataAddressConverter.create(:upper)
+      :upper
+    end
+
+    def to_s
+      @source.inspect
     end
   end
 

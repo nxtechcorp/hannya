@@ -3,13 +3,16 @@ module Hannya
   # A factory class that returns a command object whose
   # purpose it just to convert lower-case symbols to
   # a string format used in the data.
+  # @example TO_CAMEL('full_name') #=> "fullName"
+  #   TO_FULL_CAMEL('full_name') #=> "FullName"
   # A data address is a string used to access data, like an
   # XPath, field name, or hash key.
+  #
   class DataAddressConverter
 
     TO_UPPER = ->(key) { key.to_s.upcase }
-    TO_CAMEL = ->(key) { key.to_s.split('_').map(&:capitalize).join }
-    TO_LOWER = ->(key) { key.to_s.downcase }
+    TO_CAMEL = ->(key) { ary = key.to_s.split('_'); [ ary.first, ary[1..-1].map(&:capitalize) ].flatten.compact.join }
+    TO_FULL_CAMEL = ->(key) { key.to_s.split('_').map(&:capitalize).join }
 
     # @param type [Symbol, Proc] either :upper, :camel, or a proc or lambda.
     # @return AddressConverter
@@ -17,7 +20,7 @@ module Hannya
       case type
       when :upper then AddressConverter.new(TO_UPPER)
       when :camel then AddressConverter.new(TO_CAMEL)
-      when :lower then AddressConverter.new(TO_LOWER)
+      when :full_camel then AddressConverter.new(TO_FULL_CAMEL)
       else check_for_proc(type)
       end
     end
