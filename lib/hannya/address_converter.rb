@@ -12,7 +12,7 @@ module Hannya
 
     TO_UPPER = ->(key) { key.to_s.upcase }
     TO_CAMEL = ->(key) { ary = key.to_s.split('_'); [ ary.first, ary[1..-1].map(&:capitalize) ].flatten.compact.join }
-    TO_FULL_CAMEL = ->(key) { key.to_s.split('_').map(&:capitalize).join }
+    TO_PASCAL = ->(key) { key.to_s.split('_').map(&:capitalize).join }
 
     # @param type [Symbol, Proc] either :upper, :camel, or a proc or lambda.
     # @return AddressConverter
@@ -20,7 +20,7 @@ module Hannya
       case type
       when :upper then AddressConverter.new(TO_UPPER)
       when :camel then AddressConverter.new(TO_CAMEL)
-      when :full_camel then AddressConverter.new(TO_FULL_CAMEL)
+      when :pascal then AddressConverter.new(TO_PASCAL)
       else check_for_proc(type)
       end
     end

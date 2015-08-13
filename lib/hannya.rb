@@ -110,7 +110,7 @@ module Hannya
     end
 
     def default_converter
-      :full_camel
+      :pascal
     end
   end
 

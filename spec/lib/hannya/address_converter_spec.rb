@@ -14,11 +14,20 @@ RSpec.describe "an address converter" do
 
   end
 
+  context "when it is set for pascal case" do
+
+    it "converts a symbol to pascal case" do
+      ac = DataAddressConverter.create(:pascal)
+      expect(ac.convert(:horaki_hikari)).to eq 'HorakiHikari'
+    end
+
+  end
+
   context "when it is set for camel case" do
 
     it "converts a symbol to camel case" do
       ac = DataAddressConverter.create(:camel)
-      expect(ac.convert(:horaki_hikari)).to eq 'HorakiHikari'
+      expect(ac.convert(:horaki_hikari)).to eq 'horakiHikari'
     end
 
   end
