@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'http://nxtech-pc08:2000'
 
 group :development do
   gem 'guard'
